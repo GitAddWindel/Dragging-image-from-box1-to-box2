@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drag and Drop Image Between Boxes</title>
+<style>
+  .box {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    margin: 10px;
+  }
+
+  .box img {
+    width: 100%;
+    height: 100%;
+  }
+
+  #box2 {
+    background-color: lightgray;
+  }
+</style>
+</head>
+<body>
+
+<div id="box1" class="box" ondrop="drop(event)" ondragover="allowDrop(event)">
+  <img src="image.png" id="movingImage" draggable="true" ondragstart="drag(event)">
+</div>
+
+<div id="box2" class="box" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+<script>
+  function allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    var draggedImage = document.getElementById(data);
+    var box = ev.target;
+
+    // Check if the drop target is box1 or box2
+    if (box.id === "box1" || box.id === "box2") {
+      box.appendChild(draggedImage);
+    }
+  }
+</script>
+
+</body>
+</html>
